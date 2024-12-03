@@ -116,10 +116,10 @@ PROGRESS_HEIGHT = 6
 
 # ─── Animation Timing (ms) ────────────────────────────────────────────────────
 
-ANIM_FAST = 150
-ANIM_NORMAL = 250
-ANIM_SLOW = 400
-ANIM_VERY_SLOW = 600
+ANIM_FAST = 120
+ANIM_NORMAL = 220
+ANIM_SLOW = 380
+ANIM_VERY_SLOW = 550
 
 # ─── Navigation Items ─────────────────────────────────────────────────────────
 
