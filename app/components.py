@@ -79,6 +79,7 @@ class GlowCard(ctk.CTkFrame):
             )
 
     def _on_enter(self, event):
+        """Elevate card on hover with accent border glow."""
         self._hover_active = True
         self.configure(
             border_color=self.accent_color,
@@ -86,6 +87,7 @@ class GlowCard(ctk.CTkFrame):
         )
 
     def _on_leave(self, event):
+        """Reset card to default resting state."""
         self._hover_active = False
         self.configure(
             border_color=BORDER_SUBTLE,
