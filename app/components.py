@@ -114,7 +114,7 @@ class StatusBadge(ctk.CTkFrame):
 
         super().__init__(
             master,
-            fg_color=color + "20",
+            fg_color="#1a2332",
             corner_radius=RADIUS_SM,
             **kwargs
         )
@@ -198,7 +198,7 @@ class SidebarButton(ctk.CTkButton):
     def set_active(self):
         """Set button to active state."""
         self.configure(
-            fg_color=ACCENT_PRIMARY + "15",
+            fg_color=BG_CARD,
             text_color=ACCENT_BLUE_SOFT,
             border_width=0
         )

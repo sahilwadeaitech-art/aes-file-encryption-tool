@@ -970,7 +970,7 @@ class MainWindow(ctk.CTk):
         ctk.CTkButton(
             header, text="Clear History", width=110,
             font=(FONT_FAMILY, FONT_SIZE_SM),
-            fg_color=BG_SURFACE, hover_color=STATUS_ERROR + "30",
+            fg_color=BG_SURFACE, hover_color=BG_CARD_HOVER,
             text_color=STATUS_ERROR, corner_radius=RADIUS_MD,
             height=32, command=self._clear_history
         ).pack(side="right")
@@ -1169,8 +1169,8 @@ class MainWindow(ctk.CTk):
 
         # Disclaimer
         disclaimer_frame = ctk.CTkFrame(
-            scroll, fg_color=STATUS_WARNING + "10", corner_radius=RADIUS_LG,
-            border_width=1, border_color=STATUS_WARNING + "30"
+            scroll, fg_color="#1a1608", corner_radius=RADIUS_LG,
+            border_width=1, border_color="#3d2e06"
         )
         disclaimer_frame.pack(fill="x")
 
