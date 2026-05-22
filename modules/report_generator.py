@@ -1,8 +1,5 @@
 """
-Report Generator
-Generate encryption activity reports in plain text format.
-
-Author: Sahil Wade
+Simple plain-text report generation for encryption activity.
 """
 
 import os
@@ -21,16 +18,7 @@ def generate_activity_report(
     db: Optional[HistoryDB] = None,
     output_dir: Optional[str] = None
 ) -> str:
-    """
-    Generate a plain-text activity report summarizing encryption operations.
-    
-    Args:
-        db: HistoryDB instance (creates new one if not provided)
-        output_dir: Directory to save report (defaults to reports/)
-    
-    Returns:
-        Path to the generated report file
-    """
+    """Generate a text report of recent encryption activity. Returns filepath."""
     if db is None:
         db = HistoryDB()
 

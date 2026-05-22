@@ -1,59 +1,56 @@
 """
-Application Theme & Design System
-Color palette, typography, and styling constants for the UI.
-
-Author: Sahil Wade
+Theme constants — colors, fonts, spacing, dimensions.
 """
 
-# ─── Color Palette ────────────────────────────────────────────────────────────
+# ─── Colors ────────────────────────────────────────────────────────────────────
 
-# Base colors - deep space dark theme
-BG_PRIMARY = "#0a0e1a"          # Deep space black
-BG_SECONDARY = "#0f1424"        # Midnight navy
-BG_TERTIARY = "#151b2e"         # Dark indigo
-BG_CARD = "#1a2138"             # Card background
-BG_CARD_HOVER = "#1f2844"       # Card hover state
-BG_SURFACE = "#1e2640"          # Surface elements
-BG_INPUT = "#131927"            # Input field background
-BG_SIDEBAR = "#0c1020"          # Sidebar background
+# Backgrounds
+BG_PRIMARY = "#0a0e1a"
+BG_SECONDARY = "#0f1424"
+BG_TERTIARY = "#151b2e"
+BG_CARD = "#1a2138"
+BG_CARD_HOVER = "#1f2844"
+BG_SURFACE = "#1e2640"
+BG_INPUT = "#131927"
+BG_SIDEBAR = "#0c1020"
 
-# Accent colors
-ACCENT_PRIMARY = "#3b82f6"      # Electric blue
-ACCENT_SECONDARY = "#6366f1"    # Indigo
-ACCENT_TERTIARY = "#8b5cf6"     # Purple
-ACCENT_CYAN = "#06b6d4"         # Cyan glow
-ACCENT_BLUE_SOFT = "#60a5fa"    # Soft blue
+# Accents
+ACCENT_PRIMARY = "#3b82f6"
+ACCENT_SECONDARY = "#6366f1"
+ACCENT_TERTIARY = "#8b5cf6"
+ACCENT_CYAN = "#06b6d4"
+ACCENT_BLUE_SOFT = "#60a5fa"
 
-# Text colors
-TEXT_PRIMARY = "#f1f5f9"         # Primary text - clean white
-TEXT_SECONDARY = "#94a3b8"      # Secondary text - muted
-TEXT_TERTIARY = "#64748b"       # Tertiary text - dimmed
-TEXT_ACCENT = "#93c5fd"         # Accent text - blue tint
-TEXT_HEADING = "#e2e8f0"        # Heading text
+# Text
+TEXT_PRIMARY = "#f1f5f9"
+TEXT_SECONDARY = "#94a3b8"
+TEXT_TERTIARY = "#64748b"
+TEXT_ACCENT = "#93c5fd"
+TEXT_HEADING = "#e2e8f0"
 
-# Status colors
-STATUS_SUCCESS = "#10b981"      # Green - secure/success
-STATUS_WARNING = "#f59e0b"      # Orange - warning
-STATUS_ERROR = "#ef4444"        # Red - error/failed
-STATUS_INFO = "#3b82f6"         # Blue - information
+# Status
+STATUS_SUCCESS = "#10b981"
+STATUS_WARNING = "#f59e0b"
+STATUS_ERROR = "#ef4444"
+STATUS_INFO = "#3b82f6"
 
-# Border and divider colors
-BORDER_DEFAULT = "#1e293b"      # Default border
-BORDER_SUBTLE = "#1a2332"       # Subtle border
-BORDER_ACCENT = "#3b82f680"     # Accent border (with alpha)
-BORDER_FOCUS = "#3b82f6"        # Focused element border
+# Borders
+BORDER_DEFAULT = "#1e293b"
+BORDER_SUBTLE = "#1a2332"
+BORDER_ACCENT = "#3b82f680"  # not used in tk directly, just reference
+BORDER_FOCUS = "#3b82f6"
 
-# Gradient stops (for labels/descriptions)
+# Gradients (reference only, not usable in tk as-is)
 GRADIENT_START = "#3b82f6"
 GRADIENT_MID = "#6366f1"
 GRADIENT_END = "#8b5cf6"
 
-# Shadow/glow effects (conceptual - applied via frame layering)
+# Glow colors (conceptual, used for layered frame effects)
 GLOW_BLUE = "#3b82f640"
 GLOW_CYAN = "#06b6d430"
 GLOW_PURPLE = "#8b5cf630"
 
-# ─── Typography ───────────────────────────────────────────────────────────────
+# ─── Fonts ─────────────────────────────────────────────────────────────────────
 
 FONT_FAMILY = "Segoe UI"
 FONT_FAMILY_MONO = "Consolas"
@@ -69,7 +66,7 @@ FONT_SIZE_2XL = 22
 FONT_SIZE_3XL = 28
 FONT_SIZE_HERO = 36
 
-# Font weights (tuples for CTkFont)
+# Font weights (CTkFont tuples)
 FONT_REGULAR = (FONT_FAMILY, FONT_SIZE_BASE)
 FONT_MEDIUM = (FONT_FAMILY, FONT_SIZE_MD, "bold")
 FONT_BOLD = (FONT_FAMILY, FONT_SIZE_BASE, "bold")
@@ -81,7 +78,7 @@ FONT_MONO = (FONT_FAMILY_MONO, FONT_SIZE_BASE)
 FONT_MONO_SM = (FONT_FAMILY_MONO, FONT_SIZE_SM)
 FONT_CAPTION = (FONT_FAMILY, FONT_SIZE_XS)
 
-# ─── Spacing ──────────────────────────────────────────────────────────────────
+# ─── Layout ────────────────────────────────────────────────────────────────────
 
 SPACING_XS = 4
 SPACING_SM = 8
@@ -104,7 +101,7 @@ RADIUS_LG = 12
 RADIUS_XL = 16
 RADIUS_FULL = 50
 
-# ─── Component Dimensions ─────────────────────────────────────────────────────
+# ─── Dimensions ────────────────────────────────────────────────────────────────
 
 SIDEBAR_WIDTH = 220
 SIDEBAR_COLLAPSED = 60
@@ -114,14 +111,14 @@ BUTTON_HEIGHT = 38
 INPUT_HEIGHT = 40
 PROGRESS_HEIGHT = 6
 
-# ─── Animation Timing (ms) ────────────────────────────────────────────────────
+# ─── Animations (ms) ──────────────────────────────────────────────────────────
 
 ANIM_FAST = 120
 ANIM_NORMAL = 220
 ANIM_SLOW = 380
 ANIM_VERY_SLOW = 550
 
-# ─── Navigation Items ─────────────────────────────────────────────────────────
+# ─── Nav ───────────────────────────────────────────────────────────────────────
 
 NAV_ITEMS = [
     {"id": "dashboard", "label": "Dashboard", "icon": "◉"},

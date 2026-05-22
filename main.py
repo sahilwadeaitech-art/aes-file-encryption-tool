@@ -1,12 +1,5 @@
 """
-AES File Encryption Utility
-Main application entry point.
-
-A modern desktop encryption tool for secure local file protection.
-Built with Python, CustomTkinter, and the cryptography library.
-
-Author: Sahil Wade
-Version: 1.2.0
+AES File Encryption Utility — main entry point.
 """
 
 import sys
@@ -34,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    """Launch the AES File Encryption Utility."""
+    """Launch the app."""
     logger.info("Starting AES File Encryption Utility v1.2.0")
 
     try:

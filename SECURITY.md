@@ -1,54 +1,35 @@
-# Security Policy
+# Security
 
-## Supported Versions
+## Crypto details
 
-| Version | Supported |
-| ------- | --------- |
-| 1.2.x   | ✅ Active  |
-| 1.1.x   | ⚠️ Limited |
-| < 1.0   | ❌ EOL     |
+- **Encryption:** AES-256-GCM
+- **Key derivation:** PBKDF2-HMAC-SHA256, 600,000 iterations
+- **Salt:** 32 bytes random (unique per file)
+- **Nonce:** 12 bytes random (unique per file)
+- **Library:** Python `cryptography` (OpenSSL backend)
 
-## Reporting a Vulnerability
+No custom crypto. Everything uses standard primitives.
 
-If you discover a security vulnerability in this project, please report it responsibly.
+## What this does right
 
-**Do NOT open a public GitHub issue for security vulnerabilities.**
-
-Instead, reach out directly via email or private message with:
-
-1. Description of the vulnerability
-2. Steps to reproduce
-3. Potential impact assessment
-4. Suggested fix (if any)
-
-I take security seriously and will respond within 48 hours.
-
-## Cryptographic Details
-
-This application uses industry-standard cryptographic primitives:
-
-- **Encryption:** AES-256-GCM (authenticated encryption)
-- **Key Derivation:** PBKDF2-HMAC-SHA256 with 600,000 iterations
-- **Salt:** 256-bit random (per-file unique)
-- **Nonce:** 96-bit random (per-file unique)
-- **Library:** Python `cryptography` (backed by OpenSSL)
-
-## Security Considerations
-
-- All encryption/decryption is performed locally — no network calls
+- All processing is local, no network calls
 - Passwords are never stored or logged
-- Derived keys exist only in memory during operation
-- Original file hashes are computed for integrity verification
-- The application does not implement its own cryptographic primitives
+- Keys only exist in memory during the operation
+- GCM mode provides both encryption and integrity checking
+- Per-file unique salt and nonce
 
 ## Limitations
 
-- Password strength is the user's responsibility
-- No secure memory wiping (Python limitation)
-- File metadata (size, timestamps) is not hidden from the OS
-- This is an educational project — not audited for production use
+- Password strength is on you
+- Python can't guarantee secure memory wiping
+- File metadata (size, timestamps) is still visible to the OS
+- Loads entire file into memory — not great for huge files
+- **Not audited** — this is a personal/educational project
+
+## Reporting issues
+
+If you find a real security bug, please don't open a public issue. Reach out directly and I'll look into it.
 
 ## Disclaimer
 
-This tool is designed for educational purposes and personal file protection.
-It has not undergone a formal security audit. Use at your own discretion.
+This is an educational project. I use proper crypto primitives but I'm not claiming this is production-grade security software. Use at your own risk.

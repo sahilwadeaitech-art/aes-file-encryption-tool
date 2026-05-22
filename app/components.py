@@ -1,8 +1,5 @@
 """
-Reusable UI Components
-Custom widget library for the encryption utility dashboard.
-
-Author: Sahil Wade
+Custom UI components for the app.
 """
 
 import customtkinter as ctk
@@ -11,10 +8,7 @@ from app.theme import *
 
 
 class GlowCard(ctk.CTkFrame):
-    """
-    Premium card component with subtle glow border effect.
-    Used for dashboard statistics and content sections.
-    """
+    """Card with hover border highlight. Used for stats display."""
 
     def __init__(
         self,
@@ -79,20 +73,12 @@ class GlowCard(ctk.CTkFrame):
             )
 
     def _on_enter(self, event):
-        """Elevate card on hover with accent border glow."""
         self._hover_active = True
-        self.configure(
-            border_color=self.accent_color,
-            fg_color=BG_CARD_HOVER
-        )
+        self.configure(border_color=self.accent_color, fg_color=BG_CARD_HOVER)
 
     def _on_leave(self, event):
-        """Reset card to default resting state."""
         self._hover_active = False
-        self.configure(
-            border_color=BORDER_SUBTLE,
-            fg_color=BG_CARD
-        )
+        self.configure(border_color=BORDER_SUBTLE, fg_color=BG_CARD)
 
     def update_value(self, value: str):
         """Update the displayed value."""

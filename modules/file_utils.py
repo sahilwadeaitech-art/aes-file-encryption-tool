@@ -1,8 +1,5 @@
 """
-File Utility Functions
-Helper functions for file operations, validation, and formatting.
-
-Author: Sahil Wade
+File utility helpers — validation, formatting, path generation.
 """
 
 import os
@@ -50,12 +47,7 @@ def get_file_info(filepath: str) -> Optional[dict]:
 
 
 def validate_file_for_encryption(filepath: str) -> Tuple[bool, str]:
-    """
-    Validate that a file is suitable for encryption.
-    
-    Returns:
-        (is_valid, message)
-    """
+    """Check if a file can be encrypted. Returns (ok, message)."""
     path = Path(filepath)
     
     if not path.exists():
@@ -79,12 +71,7 @@ def validate_file_for_encryption(filepath: str) -> Tuple[bool, str]:
 
 
 def validate_file_for_decryption(filepath: str) -> Tuple[bool, str]:
-    """
-    Validate that a file can be decrypted.
-    
-    Returns:
-        (is_valid, message)
-    """
+    """Check if a file can be decrypted. Returns (ok, message)."""
     path = Path(filepath)
     
     if not path.exists():

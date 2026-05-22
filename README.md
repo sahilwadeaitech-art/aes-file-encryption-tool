@@ -1,244 +1,95 @@
-# 🛡️ AES File Encryption Utility
+# AES File Encryption Utility
 
-A modern desktop application for secure local file encryption using AES-256-GCM.
-Built with Python, CustomTkinter, and the `cryptography` library.
+Desktop file encryption tool using AES-256-GCM. Built with Python and CustomTkinter.
 
-![Dashboard Overview](screenshots/dashboard-overview.png)
+![Dashboard](screenshots/dashboard-overview.png)
 
----
+## What is this?
 
-## Overview
+A local file encryption app with a proper UI. I wanted something that:
+- Encrypts files with AES-256 (GCM mode, authenticated)
+- Has a usable interface instead of just a CLI
+- Tracks what I've encrypted/decrypted
+- Generates strong passwords when I need them
 
-This is a practical encryption tool designed for secure local file protection. It provides a clean, modern interface for encrypting and decrypting files using industry-standard AES-256 with authenticated encryption (GCM mode).
-
-The project combines modern Python desktop engineering with cryptographic best practices — built as both a learning exercise in encryption engineering and a genuinely useful security utility.
-
-**Key principles:**
-- Everything runs locally — no network calls, no telemetry
-- Industry-standard cryptography (no custom primitives)
-- Clean, maintainable codebase
-- Modern UI that doesn't feel like a terminal emulator
-
----
+Everything happens locally. No network calls, no cloud, no telemetry.
 
 ## Features
 
-### 🔒 AES-256-GCM Encryption
-- Authenticated encryption with integrity verification
-- PBKDF2-SHA256 key derivation (600K iterations)
-- Per-file unique salt and nonce generation
-- Custom file format with version headers
+- **File encryption/decryption** — AES-256-GCM with PBKDF2 key derivation (600K iterations)
+- **Password generator** — configurable length, charset, shows entropy
+- **Operation history** — SQLite-backed log of all encrypt/decrypt operations
+- **Dashboard** — quick stats and recent activity
+- **Dark UI** — custom theme, sidebar nav, card-based layout
 
-### 🔓 Secure Decryption
-- Password-based file restoration
-- Automatic integrity checking
-- Original filename preservation
-- Clear error handling for wrong passwords
+## Tech Stack
 
-### 🔑 Password Generator
-- Cryptographically secure random generation
-- Configurable length and character sets
-- Real-time entropy calculation
-- Strength assessment visualization
-- One-click clipboard copy
+- Python 3.11+
+- CustomTkinter (UI)
+- `cryptography` library (AES-256-GCM, PBKDF2)
+- SQLite (history tracking)
+- Threading (non-blocking encryption)
 
-### 📊 Dashboard
-- Operation statistics at a glance
-- Recent activity timeline
-- Quick action shortcuts
-- Security status overview
-
-### 📋 Encryption History
-- Complete operation log with timestamps
-- Success/failure tracking
-- File size and duration metrics
-- Filterable and clearable
-
----
-
-## Screenshots
-
-| Dashboard | Encryption | Password Generator |
-|-----------|-----------|-------------------|
-| ![Dashboard](screenshots/dashboard-overview.png) | ![Encrypt](screenshots/encryption-workflow.png) | ![Password](screenshots/password-generator.png) |
-
----
-
-## Installation
-
-### Requirements
-- Python 3.11 or higher
-- Windows 10/11 (primary), macOS, or Linux
-
-### Setup
+## Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/sahilwadeaitech-art/aes-file-encryption-tool.git
 cd aes-file-encryption-tool
 
-# Create virtual environment (recommended)
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# or: venv\Scripts\activate  # Windows
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Run the application
 python main.py
 ```
 
-### Dependencies
+## How it works
 
-| Package | Purpose |
-|---------|---------|
-| `customtkinter` | Modern UI framework |
-| `cryptography` | AES-256-GCM encryption |
-| `Pillow` | Image handling for UI assets |
+1. Pick a file to encrypt
+2. Set a password
+3. File gets encrypted with AES-256-GCM → outputs a `.enc` file
+4. To decrypt, select the `.enc` file and enter the same password
 
----
-
-## Usage
-
-### Encrypting a File
-
-1. Navigate to the **Encrypt** page
-2. Click the drop zone or browse to select a file
-3. Enter a strong password (and confirm it)
-4. Click **Encrypt File**
-5. The encrypted file is saved alongside the original with a `.enc` extension
-
-### Decrypting a File
-
-1. Navigate to the **Decrypt** page
-2. Select an encrypted `.enc` file
-3. Enter the password used during encryption
-4. Choose an output directory (defaults to the file's location)
-5. Click **Decrypt File**
-
-### Generating Passwords
-
-1. Navigate to the **Password Gen** page
-2. Adjust length and character options
-3. Click **Generate** for a new password
-4. Click **Copy** to copy to clipboard
-5. Use entropy/strength indicators to assess quality
-
----
+The encrypted file format stores a version header, random salt, nonce, and the original filename so decryption can restore it properly.
 
 ## Project Structure
 
 ```
-aes-file-encryption-tool/
-│
-├── app/                    # UI application layer
-│   ├── main_window.py     # Primary window controller
-│   ├── components.py      # Reusable UI components
-│   └── theme.py           # Design system & color palette
-│
-├── core/                   # Cryptographic core
-│   ├── encryption.py      # AES-256-GCM engine
-│   └── password_generator.py  # Secure password generation
-│
-├── modules/                # Utility modules
-│   └── file_utils.py      # File operations & validation
-│
-├── database/               # Data persistence
-│   └── history.py         # SQLite operation history
-│
-├── assets/                 # Static assets
-│   ├── icons/
-│   ├── banner/
-│   └── ui/
-│
-├── screenshots/            # Application screenshots
-├── docs/                   # Additional documentation
-├── tests/                  # Test suite
-├── logs/                   # Application logs (gitignored)
-├── reports/                # Generated reports (gitignored)
-│
-├── main.py                 # Application entry point
-├── requirements.txt        # Python dependencies
-├── CHANGELOG.md            # Version history
-├── CONTRIBUTING.md         # Contribution guidelines
-├── SECURITY.md             # Security policy & details
-└── .gitignore
+app/            — UI (main window, components, theme)
+core/           — encryption engine, password generator
+database/       — SQLite history tracking
+modules/        — file utilities, report generation
+docs/           — encryption format spec
+tests/          — pytest suite
 ```
 
----
+## Encryption Details
 
-## Technical Details
+- AES-256-GCM (authenticated encryption)
+- PBKDF2-HMAC-SHA256 key derivation, 600K iterations
+- 32-byte random salt per file
+- 12-byte random nonce per file
+- Custom binary file format (magic bytes + versioned header)
 
-### Encryption Scheme
+More details in [docs/encryption-spec.md](docs/encryption-spec.md).
 
-```
-Algorithm:       AES-256-GCM (Galois/Counter Mode)
-Key Derivation:  PBKDF2-HMAC-SHA256
-Iterations:      600,000
-Salt:            256-bit (random, per-file)
-Nonce:           96-bit (random, per-file)
-Authentication:  GCM tag (128-bit)
-```
+## Screenshots
 
-### File Format
+*Screenshots coming — need to grab some fresh ones after the latest UI update.*
 
-Encrypted files use a custom binary format:
+## TODO / Future
 
-```
-[8B magic: "AESUTIL1"] [1B version] [32B salt] [12B nonce]
-[4B filename_len] [NB filename] [ciphertext + GCM tag]
-```
-
-This allows the utility to verify file validity and restore original filenames during decryption.
-
----
-
-## Roadmap
-
-Planned features for future releases:
-
-- [ ] Batch encryption (multi-file operations)
+- [ ] Batch encrypt multiple files at once
 - [ ] Secure file shredding (overwrite before delete)
-- [ ] Exportable audit reports (PDF/HTML)
-- [ ] Cloud backup integration (encrypted sync)
-- [ ] Advanced analytics dashboard
-- [ ] Linux compatibility improvements
-- [ ] Drag-and-drop from system file explorer
-- [ ] Custom encryption profiles/presets
-
----
-
-## Limitations
-
-- Large files (>500MB) may be slow due to in-memory processing
-- No streaming encryption yet (planned for batch operations)
-- Passwords cannot be recovered — if forgotten, the file is unrecoverable
-- Not formally audited — use for personal/educational purposes
-- Python's memory model doesn't guarantee secure key wiping
-
----
+- [ ] Export history as report
+- [ ] Better large file handling (streaming)
+- [ ] Drag and drop from explorer
+- [ ] Linux font fallbacks
 
 ## Disclaimer
 
-This project is intended for **educational purposes** and **secure local file protection** workflows only.
-
-It is not designed for, and should not be used for, any malicious purpose including but not limited to ransomware, unauthorized access to others' data, or circumvention of security controls.
-
-The author takes no responsibility for misuse.
-
----
-
-## Developer
-
-Built and maintained by **Sahil Wade**.
-
-This project started as a way to learn practical cryptographic engineering and modern desktop UI development. It's grown into a useful personal tool that I continue to refine.
-
-If you find it useful or have suggestions, feel free to open an issue or contribute.
-
----
+This is for personal/educational use. It's not audited, and I'm not a cryptographer — I just use standard primitives from the `cryptography` library correctly (I hope). Don't rely on this for anything critical without understanding the limitations.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT

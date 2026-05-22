@@ -1,8 +1,5 @@
 """
-Encryption History Database
-SQLite-backed operation history tracking for the encryption utility.
-
-Author: Sahil Wade
+SQLite-backed history for tracking encrypt/decrypt operations.
 """
 
 import sqlite3
@@ -81,23 +78,7 @@ class HistoryDB:
         file_hash: str = "",
         notes: str = ""
     ) -> int:
-        """
-        Record an encryption/decryption operation.
-        
-        Args:
-            operation_type: 'encrypt' or 'decrypt'
-            filename: Name of the processed file
-            filepath: Full path to the file
-            file_size: Size in bytes
-            status: 'success' or 'failed'
-            algorithm: Encryption algorithm used
-            duration_ms: Operation duration in milliseconds
-            file_hash: SHA-256 hash of original file
-            notes: Additional notes
-        
-        Returns:
-            Row ID of the inserted record
-        """
+        """Log an encrypt/decrypt operation to the database."""
         timestamp = datetime.now().isoformat()
 
         with sqlite3.connect(self.db_path) as conn:

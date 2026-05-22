@@ -1,8 +1,8 @@
 """
-AES-256 File Encryption Engine
-Implements secure file encryption using AES-256-GCM with PBKDF2 key derivation.
+AES-256-GCM file encryption/decryption.
 
-Author: Sahil Wade
+Uses PBKDF2 for key derivation and a custom binary format
+for storing encrypted files with metadata.
 """
 
 import os
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 SALT_SIZE = 32
 NONCE_SIZE = 12
 KEY_SIZE = 32  # 256 bits
-ITERATIONS = 600_000  # OWASP 2023 recommended minimum for PBKDF2-SHA256
+ITERATIONS = 600_000  # OWASP 2023 recommendation for PBKDF2-SHA256
 CHUNK_SIZE = 64 * 1024  # 64KB chunks for streaming
 MAGIC_BYTES = b"AESUTIL1"  # File format identifier
 VERSION = 1
@@ -45,16 +45,7 @@ class IntegrityError(Exception):
 
 
 def derive_key(password: str, salt: bytes) -> bytes:
-    """
-    Derive a 256-bit encryption key from a password using PBKDF2-HMAC-SHA256.
-    
-    Args:
-        password: User-provided password string
-        salt: Random salt bytes (should be 32 bytes)
-    
-    Returns:
-        32-byte derived key suitable for AES-256
-    """
+    """Derive a 256-bit key from password + salt using PBKDF2."""
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=KEY_SIZE,
@@ -81,24 +72,11 @@ def encrypt_file(
     progress_callback: Optional[Callable[[float], None]] = None
 ) -> dict:
     """
-    Encrypt a file using AES-256-GCM with PBKDF2 key derivation.
+    Encrypt a file with AES-256-GCM.
     
-    File format:
-        [8 bytes magic] [1 byte version] [32 bytes salt] [12 bytes nonce]
-        [4 bytes original filename length] [N bytes original filename]
-        [encrypted data] [16 bytes GCM tag appended by AESGCM]
-    
-    Args:
-        input_path: Path to the plaintext file
-        output_path: Path for the encrypted output file
-        password: Encryption password
-        progress_callback: Optional callback(progress: 0.0–1.0)
-    
-    Returns:
-        dict with metadata (file_hash, file_size, output_path)
-    
-    Raises:
-        EncryptionError: If encryption fails
+    Output format:
+        [8B magic][1B version][32B salt][12B nonce]
+        [4B filename_len][filename][ciphertext + GCM tag]
     """
     try:
         input_file = Path(input_path)
@@ -175,21 +153,7 @@ def decrypt_file(
     password: str,
     progress_callback: Optional[Callable[[float], None]] = None
 ) -> dict:
-    """
-    Decrypt a file encrypted with this utility.
-    
-    Args:
-        input_path: Path to the encrypted file
-        output_dir: Directory to write the decrypted file
-        password: Decryption password
-        progress_callback: Optional callback(progress: 0.0–1.0)
-    
-    Returns:
-        dict with metadata (output_path, original_name, file_size)
-    
-    Raises:
-        DecryptionError: If decryption fails (wrong password, corrupted, etc.)
-    """
+    """Decrypt a file that was encrypted with this tool."""
     try:
         input_file = Path(input_path)
         if not input_file.exists():
@@ -275,15 +239,7 @@ def decrypt_file(
 
 
 def verify_encrypted_file(filepath: str) -> dict:
-    """
-    Verify that a file is a valid encrypted file from this utility.
-    
-    Returns:
-        dict with file metadata if valid
-    
-    Raises:
-        IntegrityError: If the file is not valid
-    """
+    """Check if a file is a valid encrypted file from this tool. Returns metadata."""
     try:
         with open(filepath, "rb") as f:
             magic = f.read(8)

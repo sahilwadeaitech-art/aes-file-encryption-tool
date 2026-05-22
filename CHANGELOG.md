@@ -1,85 +1,39 @@
 # Changelog
 
-All notable changes to this project will be documented here.
+## v1.2.0 (Jan 2025)
 
-## [1.2.0] - 2025-01-15
+- Added password generator page (entropy display, strength meter, copy to clipboard)
+- Encryption history page with table view and clear button
+- Daily stats tracking in the database
+- Settings page showing algorithm info
+- Improved card hover effects
+- Fixed Windows path issues during decryption
+- Fixed history table cutting off long filenames
 
-### Added
-- Password generator with entropy display and strength visualization
-- Encryption history page with filterable table view
-- Daily statistics tracking in SQLite
-- Settings page with algorithm details
+## v1.1.0 (Nov 2024)
 
-### Improved
-- Dashboard card hover animations
-- Sidebar navigation transitions
-- File validation error messages
-- Progress bar visual feedback
-
-### Fixed
-- File path handling on Windows
-- Output directory auto-detection during decryption
-- History table truncation for long filenames
-
----
-
-## [1.1.0] - 2024-11-20
-
-### Added
-- Dashboard overview with quick action buttons
-- Recent activity timeline on dashboard
-- Security status display
-- File drop zone component with click-to-browse
+- Dashboard with stats cards and quick actions
+- Recent activity timeline
+- File drop zone (click to browse, shows file info)
 - Operation duration tracking
+- Reworked sidebar styling
+- Fixed threading issue with progress callbacks
+- Fixed db init crash on first launch
 
-### Improved
-- Sidebar design and brand section
-- Card component border styling
-- Color palette refinements (softer accent tones)
-- Typography hierarchy consistency
+## v1.0.0 (Sep 2024)
 
-### Fixed
-- Progress callback thread safety
-- Database initialization on first run
-- Encrypted file header validation
+First proper release. Core functionality working:
+- AES-256-GCM encrypt/decrypt with PBKDF2 key derivation
+- Dark theme UI with sidebar navigation
+- Encrypt and decrypt pages
+- SQLite history logging
+- File integrity checks (SHA-256)
+- Threaded operations so UI doesn't freeze
 
----
+## v0.2.0 (Jul 2024)
 
-## [1.0.0] - 2024-09-08
+Early prototype. Basic window with file picker and password field. Encryption worked but UI was rough.
 
-### Added
-- AES-256-GCM file encryption and decryption
-- PBKDF2-SHA256 key derivation (600K iterations)
-- Modern dark-theme UI with CustomTkinter
-- Sidebar navigation system
-- Encrypt page with file selection and password input
-- Decrypt page with output directory selection
-- File integrity verification (SHA-256)
-- SQLite operation history database
-- Threaded encryption/decryption (non-blocking UI)
-- Application logging system
+## v0.1.0 (Jun 2024)
 
-### Technical
-- Custom file format with magic bytes and version header
-- Per-file unique salt and nonce generation
-- GCM authenticated encryption (integrity + confidentiality)
-- Modular project structure (core, app, database, modules)
-
----
-
-## [0.2.0] - 2024-07-14
-
-### Added
-- Basic CustomTkinter window setup
-- File selection dialog
-- Simple password input
-- Initial encryption logic (prototype)
-
----
-
-## [0.1.0] - 2024-06-01
-
-### Added
-- Initial project scaffolding
-- Basic AES encryption proof of concept
-- Requirements and project structure
+Initial scaffolding. Got the encryption logic working in a script, started figuring out CustomTkinter.

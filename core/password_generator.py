@@ -1,8 +1,6 @@
 """
-Secure Password Generator
-Cryptographically secure random password generation with entropy calculation.
-
-Author: Sahil Wade
+Password generation utilities.
+Uses secrets module for cryptographic randomness.
 """
 
 import math
@@ -60,21 +58,7 @@ def generate_password(
     exclude_ambiguous: bool = False,
     custom_chars: Optional[str] = None
 ) -> PasswordResult:
-    """
-    Generate a cryptographically secure random password.
-    
-    Args:
-        length: Password length (minimum 4)
-        use_uppercase: Include uppercase letters
-        use_lowercase: Include lowercase letters
-        use_digits: Include digits
-        use_symbols: Include special characters
-        exclude_ambiguous: Exclude ambiguous characters (i, l, 1, L, o, 0, O)
-        custom_chars: Optional custom character set (overrides other options)
-    
-    Returns:
-        PasswordResult with password, entropy, and strength info
-    """
+    """Generate a random password with the given constraints."""
     if length < 4:
         length = 4
 
@@ -146,11 +130,7 @@ def generate_passphrase(
     separator: str = "-",
     capitalize: bool = True
 ) -> PasswordResult:
-    """
-    Generate a random passphrase from a wordlist.
-    
-    Uses a built-in list of common English words for memorable passphrases.
-    """
+    """Generate a random passphrase from a built-in wordlist."""
     # Compact wordlist (EFF-inspired short list subset)
     words = [
         "anchor", "apple", "arrow", "basin", "blade", "bloom", "brave",

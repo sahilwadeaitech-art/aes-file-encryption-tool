@@ -1,44 +1,29 @@
-# Encryption Specification
+# Encrypted File Format
 
-## File Format (v1)
+## Layout (v1)
 
 ```
 Offset  Size   Field
 ------  -----  -----
-0       8B     Magic bytes: "AESUTIL1"
-8       1B     Format version (currently 1)
-9       32B    Salt (random, unique per file)
-41      12B    Nonce (random, unique per file)
-53      4B     Original filename length (little-endian uint32)
-57      NB     Original filename (UTF-8 encoded)
-57+N    ...    Ciphertext + GCM authentication tag (16B)
+0       8B     Magic: "AESUTIL1"
+8       1B     Version (1)
+9       32B    Salt
+41      12B    Nonce
+53      4B     Filename length (uint32 LE)
+57      NB     Original filename (UTF-8)
+57+N    ...    Ciphertext + 16B GCM tag
 ```
 
 ## Key Derivation
 
-- **Function:** PBKDF2-HMAC-SHA256
-- **Iterations:** 600,000 (aligned with OWASP 2023 recommendations)
-- **Salt length:** 256 bits
-- **Output key length:** 256 bits
+PBKDF2-HMAC-SHA256, 600K iterations, 32-byte salt → 32-byte key.
 
 ## Encryption
 
-- **Algorithm:** AES-256 in GCM mode
-- **Nonce:** 96 bits (randomly generated)
-- **Authentication:** GCM provides authenticated encryption
-- **Tag size:** 128 bits (appended to ciphertext by AESGCM)
+AES-256-GCM with 12-byte random nonce. The GCM tag (16 bytes) is appended to the ciphertext automatically by the `cryptography` library.
 
-## Security Properties
+## Known Limitations
 
-1. **Confidentiality** — AES-256 provides computational security
-2. **Integrity** — GCM tag detects any modification
-3. **Authentication** — GCM authenticates the ciphertext
-4. **Key uniqueness** — Random salt ensures unique keys per file
-5. **Nonce uniqueness** — Random nonce per operation
-
-## Limitations
-
-- No associated data (AAD) is currently used
-- Entire file is loaded into memory for encryption
-- No streaming/chunked encryption for large files
-- Python does not guarantee secure memory erasure
+- No AAD (associated data) used currently
+- Whole file loaded into memory (no streaming)
+- Python doesn't guarantee secure memory erasure of the key

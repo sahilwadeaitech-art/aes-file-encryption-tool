@@ -1,8 +1,5 @@
 """
-Main Application Window
-Primary UI controller for the AES File Encryption Utility.
-
-Author: Sahil Wade
+Main window — sidebar nav + page content.
 """
 
 import os
